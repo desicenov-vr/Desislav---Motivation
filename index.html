@@ -9,10 +9,10 @@
         html, body { height: 100%; margin: 0; padding: 0; background: #020617; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         body { color: #f8fafc; font-family: 'Segoe UI', system-ui, sans-serif; }
         .card { text-align: center; width: 90%; max-width: 500px; padding: 40px 20px; background: rgba(255, 255, 255, 0.03); border-radius: 50px; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
-        .btn { width: 220px; height: 220px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); margin-bottom: 20px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-transform: uppercase; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; user-select: none; }
+        .btn { width: 220px; height: 220px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); margin-bottom: 20px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-transform: uppercase; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
         .btn span { font-size: 50px; margin-bottom: 10px; display: block; }
         #display { margin-top: 20px; font-size: 24px; line-height: 1.5; min-height: 160px; color: #fff; font-weight: 300; font-style: italic; display: flex; align-items: center; justify-content: center; outline: none; }
-        .share-btn { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; display: none; width: 100%; max-width: 250px; margin-left: auto; margin-right: auto; font-weight: bold; }
+        .share-btn { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; display: none; width: 100%; max-width: 280px; margin-left: auto; margin-right: auto; font-weight: bold; }
         .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; }
         .author { color: #fcd34d; font-weight: bold; display: block; margin-top: 5px; font-size: 16px; }
         .shuffling { opacity: 0.5; filter: blur(3px); }
@@ -24,8 +24,10 @@
             <span aria-hidden="true">🔮</span>
             <div style="font-weight: bold;">РАЗБЪРКАЙ</div>
         </button>
-        <div id="display" role="status" aria-live="assertive" tabindex="-1">Разбъркай мисълта за теб...</div>
-        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 Сподели късметчето</button>
+        <div id="display" role="status" aria-live="assertive" tabindex="-1">
+            Разбъркай мисълта за теб и си поеми дълбоко дъх...
+        </div>
+        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 Сподели това късметче</button>
         <div class="footer">A special gift by <span class="author">Desislav Tsenov</span></div>
     </div>
     <script>
@@ -59,7 +61,7 @@
         ];
         const challenges = [
             "ПРЕДИЗВИКАТЕЛСТВО: Прочети 3 книги за 14 дни.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Тренирай всеки ден по минимум 20 минути за месец.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Тренирай всеки ден по минимум 20 минути.",
             "ПРЕДИЗВИКАТЕЛСТВО: Спести определена сума пари за 30 дни.",
             "ПРЕДИЗВИКАТЕЛСТВО: Научи 50 нови думи на чужд език за седмица.",
             "ПРЕДИЗВИКАТЕЛСТВО: Пиши по една страница дневно – мисли или идеи.",
@@ -103,6 +105,7 @@
             const sBtn = document.getElementById('shareBtn');
             btn.style.pointerEvents = 'none';
             sBtn.style.display = 'none';
+            d.setAttribute('aria-hidden', 'true');
             d.classList.add('shuffling');
             [1046, 1318, 1568, 2093].forEach((f, i) => playSound(f, i * 0.08, 0.1));
             let count = 0;
@@ -110,9 +113,11 @@
                 d.innerText = pool[Math.floor(Math.random() * pool.length)];
                 if (++count > 20) {
                     clearInterval(s);
+                    d.removeAttribute('aria-hidden');
                     d.classList.remove('shuffling');
                     currentChoice = Math.random() < 0.2 ? challenges[Math.floor(Math.random() * challenges.length)] : pool[Math.floor(Math.random() * pool.length)];
                     d.innerText = currentChoice;
+                    d.focus();
                     sBtn.style.display = 'block';
                     if (currentChoice.includes("ПРЕДИЗВИКАТЕЛСТВО")) playSound(150, 0, 0.4, 'square', 0.1);
                     else playSound(2637, 0, 0.15);
@@ -122,11 +127,11 @@
         }
         function shareResult() {
             if (!currentChoice) return;
-            const text = `Моят късмет за днес е: "${currentChoice}"\nВиж твоя тук: ${window.location.href}`;
+            const text = `Моят късмет за днес: "${currentChoice}"\nВиж твоя тук: ${window.location.href}`;
             if (navigator.share) {
                 navigator.share({ title: 'Crystal Oracle', text: text }).catch(() => {});
             } else {
-                alert("Копирай адреса от браузъра и го прати на приятел!");
+                alert("Копирай адреса и го прати на приятел!");
             }
         }
     </script>
