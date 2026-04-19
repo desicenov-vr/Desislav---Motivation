@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="card">
-        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай сферата">
+        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай мисълта за теб">
             <span aria-hidden="true">🔮</span>
             <div id="btnText" style="font-weight: bold;">РАЗБЪРКАЙ</div>
         </button>
@@ -81,6 +81,22 @@
             "ПРЕДИЗВИКАТЕЛСТВО: Смени си дрехите с приятел."
         ];
         let currentChoice = "";
+        let audioCtx;
+        function playSound(f, t, v, type = 'sine', d = 0.8) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const o = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o.type = type;
+                o.frequency.setValueAtTime(f, audioCtx.currentTime + t);
+                g.gain.setValueAtTime(0, audioCtx.currentTime + t);
+                g.gain.linearRampToValueAtTime(v, audioCtx.currentTime + t + 0.01);
+                g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + t + d);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(audioCtx.currentTime + t);
+                o.stop(audioCtx.currentTime + t + d);
+            } catch(e) {}
+        }
         function go() {
             const btn = document.getElementById('mainBtn');
             const d = document.getElementById('display');
@@ -88,17 +104,22 @@
             const bT = document.getElementById('btnText');
             btn.style.pointerEvents = 'none';
             sBtn.style.display = 'none';
+            d.setAttribute('aria-hidden', 'true');
             d.classList.add('shuffling');
+            [1046, 1318, 1568, 2093].forEach((f, i) => playSound(f, i * 0.08, 0.1));
             let count = 0;
             const s = setInterval(() => {
                 d.innerText = pool[Math.floor(Math.random() * pool.length)];
                 if (++count > 20) {
                     clearInterval(s);
                     d.classList.remove('shuffling');
+                    d.removeAttribute('aria-hidden');
                     currentChoice = Math.random() < 0.2 ? challenges[Math.floor(Math.random() * challenges.length)] : pool[Math.floor(Math.random() * pool.length)];
                     d.innerText = currentChoice;
                     d.focus();
                     sBtn.style.display = 'block';
+                    if (currentChoice.includes("ПРЕДИЗВИКАТЕЛСТВО")) playSound(150, 0, 0.4, 'square', 0.1);
+                    else playSound(2637, 0, 0.15);
                     btn.style.pointerEvents = 'auto';
                     bT.innerText = "ОЩЕ ВЕДНЪЖ";
                 }
@@ -109,7 +130,7 @@
             if (navigator.share) {
                 navigator.share({ 
                     title: 'Crystal Oracle', 
-                    text: 'Пробвай това приложение за късмети:', 
+                    text: 'Изтегли своя късмет тук:', 
                     url: link 
                 }).catch(() => {});
             }
