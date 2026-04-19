@@ -12,7 +12,7 @@
         .btn { width: 220px; height: 220px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); margin-bottom: 20px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-transform: uppercase; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
         .btn span { font-size: 50px; margin-bottom: 10px; display: block; }
         #display { margin-top: 20px; font-size: 24px; line-height: 1.5; min-height: 160px; color: #fff; font-weight: 300; font-style: italic; display: flex; align-items: center; justify-content: center; outline: none; }
-        .share-btn { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; display: none; width: 100%; max-width: 280px; margin-left: auto; margin-right: auto; font-weight: bold; }
+        .share-btn { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; display: none; width: 100%; max-width: 200px; margin-left: auto; margin-right: auto; font-weight: bold; }
         .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; }
         .author { color: #fcd34d; font-weight: bold; display: block; margin-top: 5px; font-size: 16px; }
         .shuffling { opacity: 0.5; filter: blur(3px); }
@@ -20,12 +20,12 @@
 </head>
 <body>
     <div class="card">
-        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай мисълта за теб">
+        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай сферата">
             <span aria-hidden="true">🔮</span>
-            <div style="font-weight: bold;">РАЗБЪРКАЙ</div>
+            <div id="btnText" style="font-weight: bold;">РАЗБЪРКАЙ</div>
         </button>
-        <div id="display" role="status" aria-live="assertive" tabindex="-1">Докосни сферата и си поеми дълбоко дъх...</div>
-        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 Сподели късметчето</button>
+        <div id="display" role="status" aria-live="polite" tabindex="-1">Докосни сферата и си поеми дълбоко дъх...</div>
+        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 СПОДЕЛИ</button>
         <div class="footer">A special gift by <span class="author">Desislav Tsenov</span></div>
     </div>
     <script>
@@ -62,74 +62,56 @@
             "ПРЕДИЗВИКАТЕЛСТВО: Тренирай всеки ден по минимум 20 минути.",
             "ПРЕДИЗВИКАТЕЛСТВО: Спести определена сума пари за 30 дни.",
             "ПРЕДИЗВИКАТЕЛСТВО: Научи 50 нови думи на чужд език за седмица.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Пиши по една страница дневно – мисли или идеи.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Пиши по една страница дневно.",
             "ПРЕДИЗВИКАТЕЛСТВО: Направи 100 лицеви опори днес.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Яж само домашно приготвена храна за 2 седмици.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Направи по едно добро дело на ден за 10 дни.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Яж само домашна храна за 2 седмици.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи добро дело днес.",
             "ПРЕДИЗВИКАТЕЛСТВО: Не се оплаквай за 5 дни.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Говори един цял ден като герой от филм.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Прекарай 24 часа, в които казваш „да“ на всичко.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Направи си „моден стил“ от най-странните си дрехи.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Измисли си нова дума и я използвай цял ден.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Пиши съобщения на приятели, но само с въпроси.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Гледай филм без звук и си измисляй диалозите.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Опитай се да не се засмееш.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Направи 10 селфита с абсурдни изражения.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Опитай се да убедиш приятел в нещо безсмислено.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Създайте най-лошата възможна реклама.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Говорете 30 минути само с измислен акцент.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Сменете си дрехите помежду си за 10 минути."
+            "ПРЕДИЗВИКАТЕЛСТВО: Говори цял ден като герой от филм.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Казвай „да“ на всичко днес.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи си странна прическа.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Измисли нова дума и я използвай.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Пиши на приятели само с въпроси.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Гледай филм без звук и си измисляй диалог.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Не се засмивай днес.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи 10 откачени селфита.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Убеди приятел в нещо лудо.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи най-смешната реклама.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Говори 30 минути с чужд акцент.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Смени си дрехите с приятел."
         ];
         let currentChoice = "";
-        let audioCtx;
-        function playSound(f, t, v, type = 'sine', d = 0.8) {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const o = audioCtx.createOscillator();
-                const g = audioCtx.createGain();
-                o.type = type;
-                o.frequency.setValueAtTime(f, audioCtx.currentTime + t);
-                g.gain.setValueAtTime(0, audioCtx.currentTime + t);
-                g.gain.linearRampToValueAtTime(v, audioCtx.currentTime + t + 0.01);
-                g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + t + d);
-                o.connect(g); g.connect(audioCtx.destination);
-                o.start(audioCtx.currentTime + t);
-                o.stop(audioCtx.currentTime + t + d);
-            } catch(e) {}
-        }
         function go() {
             const btn = document.getElementById('mainBtn');
             const d = document.getElementById('display');
             const sBtn = document.getElementById('shareBtn');
+            const bT = document.getElementById('btnText');
             btn.style.pointerEvents = 'none';
             sBtn.style.display = 'none';
-            d.setAttribute('aria-hidden', 'true');
             d.classList.add('shuffling');
-            [1046, 1318, 1568, 2093].forEach((f, i) => playSound(f, i * 0.08, 0.1));
             let count = 0;
             const s = setInterval(() => {
                 d.innerText = pool[Math.floor(Math.random() * pool.length)];
                 if (++count > 20) {
                     clearInterval(s);
                     d.classList.remove('shuffling');
-                    d.removeAttribute('aria-hidden');
                     currentChoice = Math.random() < 0.2 ? challenges[Math.floor(Math.random() * challenges.length)] : pool[Math.floor(Math.random() * pool.length)];
                     d.innerText = currentChoice;
                     d.focus();
                     sBtn.style.display = 'block';
-                    if (currentChoice.includes("ПРЕДИЗВИКАТЕЛСТВО")) playSound(150, 0, 0.4, 'square', 0.1);
-                    else playSound(2637, 0, 0.15);
                     btn.style.pointerEvents = 'auto';
+                    bT.innerText = "ОЩЕ ВЕДНЪЖ";
                 }
             }, 60);
         }
         function shareResult() {
-            if (!currentChoice) return;
-            const text = "Моят късмет за днес е: " + currentChoice;
+            const link = window.location.origin + window.location.pathname;
             if (navigator.share) {
-                navigator.share({ title: 'Crystal Oracle', text: text, url: window.location.href }).catch(() => {});
-            } else {
-                alert(text);
+                navigator.share({ 
+                    title: 'Crystal Oracle', 
+                    text: 'Пробвай това приложение за късмети:', 
+                    url: link 
+                }).catch(() => {});
             }
         }
     </script>
