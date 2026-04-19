@@ -3,76 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crystal Oracle - Desislav Tsenov</title>
+    <title>Crystal Oracle</title>
     <style>
         :root { --primary: #7c3aed; --secondary: #db2777; }
-        body { 
-            background: #020617; color: #f8fafc; font-family: 'Segoe UI', system-ui, sans-serif; 
-            display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;
-            overflow: hidden;
-        }
-        .card {
-            text-align: center; width: 85%; max-width: 500px; padding: 40px 30px;
-            background: rgba(255, 255, 255, 0.03); border-radius: 50px;
-            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-        }
-        .btn {
-            width: 240px; height: 240px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1);
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; font-size: 16px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); margin-bottom: 20px;
-            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-            text-transform: uppercase; transition: transform 0.2s;
-            -webkit-tap-highlight-color: transparent; user-select: none;
-        }
+        html, body { height: 100%; margin: 0; padding: 0; background: #020617; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        body { color: #f8fafc; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .card { text-align: center; width: 90%; max-width: 500px; padding: 40px 20px; background: rgba(255, 255, 255, 0.03); border-radius: 50px; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
+        .btn { width: 220px; height: 220px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); margin-bottom: 20px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-transform: uppercase; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; user-select: none; }
         .btn span { font-size: 50px; margin-bottom: 10px; display: block; }
-        #display {
-            margin-top: 20px; font-size: 24px; line-height: 1.5; min-height: 160px;
-            color: #fff; font-weight: 300; font-style: italic;
-            display: flex; align-items: center; justify-content: center; outline: none;
-        }
-        .share-btn {
-            background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2);
-            color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer;
-            font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
-            margin-top: 15px; display: none; width: 100%; max-width: 280px; 
-            margin-left: auto; margin-right: auto; font-weight: bold;
-        }
-        .footer {
-            margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 14px; color: #94a3b8; letter-spacing: 3px; text-transform: uppercase;
-        }
-        .author { color: #fcd34d; font-weight: bold; display: block; margin-top: 8px; font-size: 18px; }
+        #display { margin-top: 20px; font-size: 24px; line-height: 1.5; min-height: 160px; color: #fff; font-weight: 300; font-style: italic; display: flex; align-items: center; justify-content: center; outline: none; }
+        .share-btn { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; display: none; width: 100%; max-width: 250px; margin-left: auto; margin-right: auto; font-weight: bold; }
+        .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; }
+        .author { color: #fcd34d; font-weight: bold; display: block; margin-top: 5px; font-size: 16px; }
         .shuffling { opacity: 0.5; filter: blur(3px); }
     </style>
 </head>
 <body>
-
     <div class="card">
         <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай мисълта за теб">
             <span aria-hidden="true">🔮</span>
             <div style="font-weight: bold;">РАЗБЪРКАЙ</div>
         </button>
-        
-        <div id="display" role="status" aria-live="assertive" tabindex="-1">
-            Докосни сферата...
-        </div>
-
-        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 Сподели с приятели</button>
-        
-        <div class="footer">
-            A special gift by 
-            <span class="author">Desislav Tsenov</span>
-        </div>
+        <div id="display" role="status" aria-live="assertive" tabindex="-1">Разбъркай мисълта за теб...</div>
+        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 Сподели късметчето</button>
+        <div class="footer">A special gift by <span class="author">Desislav Tsenov</span></div>
     </div>
-
     <script>
-        const APP_URL = "https://deft-puppy-d61f0e.netlify.app/";
-        
-        // Масиви (съкратени тук за яснота, но запази всичките си текстове в твоя файл)
-        const wisdomQuotes = ["Заедно можем повече!", "Промени мислите си..."];
-        const constantLuck = [
+        const pool = [
             "Усмивката ти днес ще отвори врати, които вчера са били затворени.",
             "Очаква те приятна изненада от човек, за когото не мислиш често.",
             "Малка стъпка днес ще доведе до голям успех утре.",
@@ -84,15 +41,7 @@
             "Вярвай в себе си — това е ключът към успеха ти.",
             "Днес е ден за сбъдване на малки мечти.",
             "Любовта идва, когато най-малко я очакваш.",
-            "Сърцето ти скоро ще бие по-бързо за някой специален.",
             "Очаква те среща, която ще промени всичко.",
-            "Някой мисли за теб повече, отколкото предполагаш.",
-            "Любовта ще намери пътя към теб съвсем скоро.",
-            "Един поглед ще бъде достатъчен, за да разбереш всичко.",
-            "Стара любов може да се върне с нов шанс.",
-            "Истинските чувства ще се разкрият в точния момент.",
-            "Очаква те романтика, която ще стопли сърцето ти.",
-            "Някой ще ти признае чувства, които дълго е криел.",
             "Днес усилията ти ще бъдат забелязани и оценени.",
             "Очаква те нова възможност, която ще промени посоката ти към по-добро.",
             "Работата ти ще донесе не само успех, но и удовлетворение.",
@@ -110,92 +59,74 @@
         ];
         const challenges = [
             "ПРЕДИЗВИКАТЕЛСТВО: Прочети 3 книги за 14 дни.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Тренирай всеки ден по минимум 20 минути.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Спести пари за 30 дни.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Тренирай всеки ден по минимум 20 минути за месец.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Спести определена сума пари за 30 дни.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Научи 50 нови думи на чужд език за седмица.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Пиши по една страница дневно – мисли или идеи.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи 100 лицеви опори днес.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Яж само домашно приготвена храна за 2 седмици.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи по едно добро дело на ден за 10 дни.",
             "ПРЕДИЗВИКАТЕЛСТВО: Не се оплаквай за 5 дни.",
-            "ПРЕДИЗВИКАТЕЛСТВО: Говори цял ден като герой от филм."
+            "ПРЕДИЗВИКАТЕЛСТВО: Говори един цял ден като герой от филм.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Прекарай 24 часа, в които казваш „да“ на всичко.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи си „моден стил“ от най-странните си дрехи.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Измисли си нова дума и я използвай цял ден.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Пиши съобщения на приятели, но само с въпроси.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Гледай филм без звук и си измисляй диалозите.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Опитай се да не се засмееш.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Направи 10 селфита с абсурдни изражения.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Опитай се да убедиш приятел в нещо безсмислено.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Създайте най-лошата възможна реклама.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Говорете 30 минути само с измислен акцент.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Сменете си дрехите помежду си за 10 минути."
         ];
-        // Добави и другите категории тук...
-
         let currentChoice = "";
         let audioCtx;
-
-        function playSound(freq, time, vol, type = 'sine', decay = 0.8) {
+        function playSound(f, t, v, type = 'sine', d = 0.8) {
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
+                const o = audioCtx.createOscillator();
                 const g = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + time);
-                g.gain.setValueAtTime(0, audioCtx.currentTime + time);
-                g.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + time + 0.01);
-                g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + time + decay);
-                osc.connect(g); g.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + time);
-                osc.stop(audioCtx.currentTime + time + decay);
+                o.type = type;
+                o.frequency.setValueAtTime(f, audioCtx.currentTime + t);
+                g.gain.setValueAtTime(0, audioCtx.currentTime + t);
+                g.gain.linearRampToValueAtTime(v, audioCtx.currentTime + t + 0.01);
+                g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + t + d);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(audioCtx.currentTime + t);
+                o.stop(audioCtx.currentTime + t + d);
             } catch(e) {}
         }
-
         function go() {
             const btn = document.getElementById('mainBtn');
             const d = document.getElementById('display');
             const sBtn = document.getElementById('shareBtn');
-            
             btn.style.pointerEvents = 'none';
             sBtn.style.display = 'none';
-            d.setAttribute('aria-hidden', 'true'); // Скриваме от VoiceOver
             d.classList.add('shuffling');
-
             [1046, 1318, 1568, 2093].forEach((f, i) => playSound(f, i * 0.08, 0.1));
-
-            const hour = new Date().getHours();
-            let pool = [...wisdomQuotes, ...constantLuck]; 
-            // Тук добави и часовите проверки...
-
             let count = 0;
             const s = setInterval(() => {
                 d.innerText = pool[Math.floor(Math.random() * pool.length)];
-                count++;
-                if (count > 20) {
+                if (++count > 20) {
                     clearInterval(s);
-                    setTimeout(() => {
-                        d.removeAttribute('aria-hidden'); // Показваме на VoiceOver
-                        d.classList.remove('shuffling');
-                        
-                        if (Math.random() < 0.15) {
-                            currentChoice = challenges[Math.floor(Math.random() * challenges.length)];
-                        } else {
-                            currentChoice = pool[Math.floor(Math.random() * pool.length)];
-                        }
-
-                        d.innerText = currentChoice;
-                        d.focus();
-                        sBtn.style.display = 'block';
-
-                        if (currentChoice.includes("ПРЕДИЗВИКАТЕЛСТВО")) {
-                            playSound(150, 0, 0.4, 'square', 0.1); 
-                        } else playSound(2637, 0, 0.15);
-                        
-                        btn.style.pointerEvents = 'auto';
-                    }, 50);
+                    d.classList.remove('shuffling');
+                    currentChoice = Math.random() < 0.2 ? challenges[Math.floor(Math.random() * challenges.length)] : pool[Math.floor(Math.random() * pool.length)];
+                    d.innerText = currentChoice;
+                    sBtn.style.display = 'block';
+                    if (currentChoice.includes("ПРЕДИЗВИКАТЕЛСТВО")) playSound(150, 0, 0.4, 'square', 0.1);
+                    else playSound(2637, 0, 0.15);
+                    btn.style.pointerEvents = 'auto';
                 }
             }, 60);
         }
-
         function shareResult() {
             if (!currentChoice) return;
-            
-            const shareText = `Моят късмет днес: "${currentChoice}"\nВиж твоя тук:`;
-
+            const text = `Моят късмет за днес е: "${currentChoice}"\nВиж твоя тук: ${window.location.href}`;
             if (navigator.share) {
-                navigator.share({
-                    text: shareText,
-                    url: APP_URL
-                }).catch(err => {
-                    console.log("Отказано споделяне");
-                });
+                navigator.share({ title: 'Crystal Oracle', text: text }).catch(() => {});
             } else {
-                alert("Твоят браузър не поддържа директно споделяне. Опитай през Chrome или Safari на мобилен телефон.");
+                alert("Копирай адреса от браузъра и го прати на приятел!");
             }
         }
     </script>
