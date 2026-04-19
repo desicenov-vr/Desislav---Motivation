@@ -20,11 +20,11 @@
 </head>
 <body>
     <div class="card">
-        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай сферата">
+        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай мисълта за теб">
             <span aria-hidden="true">🔮</span>
             <div style="font-weight: bold;">РАЗБЪРКАЙ</div>
         </button>
-        <div id="display" role="status" aria-live="polite" tabindex="-1">Докосни сферата и си поеми дълбоко дъх...</div>
+        <div id="display" role="status" aria-live="assertive" tabindex="-1">Докосни сферата и си поеми дълбоко дъх...</div>
         <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 Сподели късметчето</button>
         <div class="footer">A special gift by <span class="author">Desislav Tsenov</span></div>
     </div>
@@ -103,6 +103,7 @@
             const sBtn = document.getElementById('shareBtn');
             btn.style.pointerEvents = 'none';
             sBtn.style.display = 'none';
+            d.setAttribute('aria-hidden', 'true');
             d.classList.add('shuffling');
             [1046, 1318, 1568, 2093].forEach((f, i) => playSound(f, i * 0.08, 0.1));
             let count = 0;
@@ -111,6 +112,7 @@
                 if (++count > 20) {
                     clearInterval(s);
                     d.classList.remove('shuffling');
+                    d.removeAttribute('aria-hidden');
                     currentChoice = Math.random() < 0.2 ? challenges[Math.floor(Math.random() * challenges.length)] : pool[Math.floor(Math.random() * pool.length)];
                     d.innerText = currentChoice;
                     d.focus();
@@ -123,11 +125,11 @@
         }
         function shareResult() {
             if (!currentChoice) return;
-            const text = `Моят късмет за днес е: "${currentChoice}"\nВиж твоя тук: ${window.location.href}`;
+            const text = "Моят късмет за днес е: " + currentChoice;
             if (navigator.share) {
-                navigator.share({ title: 'Crystal Oracle', text: text }).catch(() => {});
+                navigator.share({ title: 'Crystal Oracle', text: text, url: window.location.href }).catch(() => {});
             } else {
-                alert("Копирай адреса и го прати на приятел!");
+                alert(text);
             }
         }
     </script>
