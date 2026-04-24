@@ -3,172 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crystal Oracle - Desislav Tsenov</title>
-    <meta property="og:title" content="🔮 Crystal Oracle - Твоят Късмет">
-    <meta property="og:description" content="Докосни сферата и си поеми дълбоко дъх... Виж какво съобщение те очаква!">
-    <meta property="og:type" content="website">
+    <title>Queens Luck - Desislav Tsenov</title>
+    <meta property="og:title" content="🥤 Queens Luck - Твоят Късмет">
+    <meta property="og:description" content="Отвори своята капачка и виж какво те очаква!">
+    <meta property="og:image" content="https://img.icons8.com/emoji/256/bottle-cap.png">
     <style>
-        :root { --primary: #7c3aed; --secondary: #db2777; }
-        body { background: #020617; color: #f8fafc; font-family: 'Segoe UI', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; }
-        .card { text-align: center; width: 85%; max-width: 500px; padding: 50px 30px; background: rgba(255, 255, 255, 0.03); border-radius: 50px; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
-        .btn { width: 260px; height: 260px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); margin-bottom: 30px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-transform: uppercase; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; user-select: none; padding: 25px; box-sizing: border-box; overflow: hidden; }
-        .btn span { font-size: 50px; margin-bottom: 10px; display: block; }
-        .btn-text { display: block; width: 100%; line-height: 1.2; word-wrap: break-word; white-space: normal; }
+        :root { --q-red: #e11d48; --q-dark: #be123c; }
+        body { background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        .card { text-align: center; width: 85%; max-width: 500px; padding: 40px 20px; background: rgba(255, 255, 255, 0.02); border-radius: 50px; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
+        .btn { width: 230px; height: 230px; border-radius: 50%; border: 8px solid #fff; background: linear-gradient(145deg, var(--q-red), var(--q-dark)); color: white; font-size: 18px; font-weight: 900; cursor: pointer; box-shadow: 0 15px 35px rgba(0,0,0,0.4); margin-bottom: 30px; display: inline-flex; align-items: center; justify-content: center; text-transform: uppercase; transition: all 0.1s; -webkit-tap-highlight-color: transparent; padding: 30px; text-align: center; line-height: 1.2; }
         .btn:active { transform: scale(0.95); }
-        #display { margin-top: 20px; font-size: 24px; line-height: 1.5; min-height: 200px; color: #fff; font-weight: 300; font-style: italic; display: flex; align-items: center; justify-content: center; outline: none; }
-        .share-btn { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px 30px; border-radius: 40px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px; display: none; width: 100%; max-width: 200px; margin-left: auto; margin-right: auto; font-weight: bold; }
-        .shuffling { opacity: 0.5; filter: blur(3px); }
-        .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: #94a3b8; letter-spacing: 3px; text-transform: uppercase; }
-        .author { color: #fcd34d; font-weight: bold; display: block; margin-top: 8px; font-size: 18px; }
-        @media (max-width: 480px) { .btn { width: 220px; height: 220px; font-size: 14px; padding: 20px; } .btn span { font-size: 40px; } }
+        .open-anim { animation: pop 0.5s ease; }
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1) translateY(-25px); } 100% { transform: scale(1); } }
+        #display { margin-top: 20px; font-size: 24px; line-height: 1.4; min-height: 160px; color: #fff; font-weight: 300; font-style: italic; display: flex; align-items: center; justify-content: center; outline: none; padding: 0 10px; }
+        .share-btn { background: #fff; border: none; color: #000; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-size: 14px; text-transform: uppercase; margin-top: 20px; display: none; font-weight: 900; transition: all 0.2s; margin-bottom: 20px; }
+        .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #94a3b8; line-height: 1.8; }
+        .author { color: #fcd34d; font-weight: bold; display: block; font-size: 18px; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="card" role="main">
-        <button id="mainBtn" class="btn" onclick="go()" aria-label="Разбъркай мисълта за теб">
-            <span aria-hidden="true">🔮</span>
-            <div class="btn-text">Разбъркай мисълта за теб</div>
-        </button>
-        <div id="display" role="status" aria-live="assertive" tabindex="-1">Докосни сферата и си поеми дълбоко дъх...</div>
-        <button id="shareBtn" class="share-btn" onclick="shareResult()">📢 СПОДЕЛИ</button>
-        <div class="footer">A special gift by <span class="author">Desislav Tsenov</span></div>
+    <div class="card">
+        <button id="mainBtn" class="btn" onclick="go()">Твоята капачка за днес</button>
+        <div id="display" role="status" aria-live="assertive" tabindex="-1">Кликни за късмет...</div>
+        <button id="shareBtn" class="share-btn" onclick="share()">📢 СПОДЕЛИ КЪСМЕТА</button>
+        <div class="footer">
+            A special gift by
+            <span class="author">Desislav Tsenov</span>
+        </div>
     </div>
     <script>
-        const morningQuotes = [
-            "Първо кафето, после плановете. Добро утро и успех!",
-            "Уханието на кафе е обещание за свежи идеи. Енергичен старт!",
-            "Уханието на кафе е обещание за успешен старт. Желая ти страхотен ден!",
-            "Въздухът сутрин е пълен с нови възможности. Нека денят ти бъде слънчев!",
-            "Днес си магнит за чудеса... и добро кафе. Добро утро!",
-            "Твоята решителност е по-силна от двойно еспресо. Енергичен старт на деня!",
-            "Сутринта е време за мечти и гореща напитка. Усмихни се на утрото!",
-            "Нека първата глътка кафе ти донесе гениална идея. Успешен ден!",
-            "Животът започва след първото кафе. Добро утро и прекрасен старт!"
+        const morning = ["Първо кафето, после плановете. Добро утро!", "Уханието на кафе е обещание за свежи идеи.", "Днес си магнит за чудеса... и добро кафе!", "Усмихни се на късмета си – днес той е изцяло на твоя страна.", "Днес е твоят ден да бъдеш център на вниманието – възползвай се!", "Кафето ти днес е със специална добавка: 100% успех!", "Добро утро! Днес усмивката ти ще отваря повече врати от всеки ключ.", "Събуди се с мисълта, че нещо голямо предстои. И кафето помага!", "Днес си в режим 'всичко ми се получава'. Пий едно кафе и започвай!"];
+        const lunch = ["Време е за презареждане и още едно кафе. Да ти е сладко!", "Половината ден мина – справи се страхотно!", "Днес е денят да довършиш онова, което отлагаш от седмици. Ще ти олекне!", "Днес бизнесът и парите са на твоя страна. Действай решително!", "Обядът е важен, но твоят успех е по-важен. Нахрани се и ги смачкай!", "След добрия обяд идват най-добрите бизнес идеи.", "Пауза за обяд и малко хумор – днес ще си най-бързият в офиса."];
+        const afternoon = ["Следобедното кафе е луксът, който заслужаваш.", "Трудът ти най-после ще бъде оценен подобаващо – очаквай бонус или похвала!", "Помниш ли как събирахме капачките на queens в голямото междучасие? Днес ти предстоят хубави неща!", "Нов проект или нова идея ще се превърнат в твоя златен шанс съвсем скоро.", "Следобедът носи новини, които ще те накарат да се усмихнеш широко.", "Енергията ти следобед е заразна. Предай я на колегите!", "Късметът ти за днес: телефонът ще звънне с предложение, на което не се отказва."];
+        const evening = ["Очаквай успех в преговорите – днес гласът ти тежи повече от всякога.", "Днес колегите ти ще видят в теб истински лидер. Поведи ги!", "Професионалният ти път придобива нова, по-ясна посока. Гледай само напред!", "„Започни да правиш необходимото, после възможното и изведнъж ще откриеш, че постигаш невъзможното.“", "Вечерта ти носи заслужено признание и спокойна гордост от свършеното.", "Днес си направил малка стъпка, която скоро ще стане голям скок."];
+        const night = ["Мечтай смело, докато заспиваш. Лека нощ!", "Остави мислите да отлетят. Спи спокойно!", "Всяка нощ е мост към едно по-добро 'утре'.", "„Не чакай. Времето за действие никога няма да изглежда подходящо.“", "Тишина, спокойствие и един голям късмет под възглавницата."];
+        const base = [
+            "Някому се падна люлката, ала таз година твоя ще е булката.",
+            "Късмет изтегли, всичко е решено- парички ти се падат във зелено!",
+            "Заедно можем повече!",
+            "Някои неща не се забравят, точно като безгрижието от детството. Очаквай хубава новина!",
+            "Ще получиш признание за нещо, което си мислел, че никой не е забелязал.",
+            "Отвори сетивата си за хубавите моменти!",
+            "Малка стъпка днес ще доведе до голям успех съвсем скоро.",
+            "Днес ще ти пишат за нещо готино в месинджър.",
+            "Усмивката ти е заразна. Предай я нататък!",
+            "Някой те споменава с добро в момента. Усмихни се!",
+            "ПРЕДИЗВИКАТЕЛСТВО: Напиши на стар приятел: 'Брат, помниш ли как събирахме капачки от Queens?'",
+            "ПРЕДИЗВИКАТЕЛСТВО: Обади се на човек, с когото сте правили бели като малки.",
+            "ПРЕДИЗВИКАТЕЛСТВО: Намери снимка от ученическите години и я прати в общия чат.",
+            "Предизвикателство: ако харесваш някого и се чудиш дали да му признаеш, действай сега!",
+            "Предизвикателство: обади се на приятел и си промени гласа.",
+            "Предизвикателство: Спукай балон!",
+            "Днес си като капачка на Queens – всеки иска да види какви мисли има в главата ти!",
+            "Късметът ти е 'чук' – всички врати се отварят, само влез!",
+            "Днес си 10 от 10. Гледай си кефа!"
         ];
-        const lunchQuotes = [
-            "Обядът не е само храна, а и време за рестарт. Наслади се на паузата!",
-            "Време е за презареждане и още едно малко кафе. Вкусен и спокоен обяд!",
-            "Половината ден мина – справи се страхотно! Да ти е сладко и си почини!",
-            "Дай си 5 минути почивка. Заслужил си я! Презареди с добро настроение!",
-            "Една вкусна пауза прави чудеса с настроението. Приятен обяд!"
-        ];
-        const afternoonQuotes = [
-            "Следобедното кафе е малкият лукс, който заслужаваш. Свеж следобед!",
-            "Малка разходка или чаша вода – събуди тялото си! Свеж следобед ти желая!",
-            "Най-добрите идеи идват с второто кафе за деня. Следобедът е твой!",
-            "Нека времето ти сега бъде леко и ползотворно. Наслади се на остатъка от деня!",
-            "Още малко усилия и успехът ще е в ръцете ти. Успешно довършване на деня!"
-        ];
-        const eveningQuotes = [
-            "Остави работата, вечерта е за теб. Хубава и уютна вечер!",
-            "Топла вечер, хубава музика и ти... перфектната комбинация. Наслади се!",
-            "Време е да свалиш 'бронята' и просто да бъдеш себе си. Пълен релакс!",
-            "Денят беше дълъг, но ти беше по-силен. Заслужена почивка!",
-            "Наслади се на спокойствието на залеза. Мирна и споделена вечер!"
-        ];
-        const nightQuotes = [
-            "Мечтай смело, докато заспиваш – сънищата са план за бъдещето. Лека нощ!",
-            "Остави мислите да отлетят. Нощта носи мъдрост в тишината. Спи спокойно!",
-            "Всяка нощ е мост към едно по-добро 'утре'. Сладки сънища!",
-            "Тишина, уют и покой. Подари си ги. Вълшебна нощ!"
-        ];
-        const wisdomQuotes = ["Заедно можем повече!", "Промени мислите си и ще промениш света си.", "Малки крачки всеки ден водят до големи промени.", "Вярвай в себе си – това е ключът към всичко.", "Твоята енергия е твоята валута. Харчи я разумно!"];
-        const challenges = ["ПРЕДИЗВИКАТЕЛСТВО: Целуни човека до теб!", "ПРЕДИЗВИКАТЕЛСТВО: Направи 10 лицеви опори!", "ПРЕДИЗВИКАТЕЛСТВО: Кажи нещо мило на някого.", "ПРЕДИЗВИКАТЕЛСТВО: Изпий една чаша вода на екс!"];
 
         let history = [];
         let audioCtx;
-        let lastResult = "";
 
-        function playSound(freq, time, vol, type = 'sine', decay = 0.8) {
+        function play(f, d, v, t='sine') {
             try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
+                const o = audioCtx.createOscillator();
                 const g = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + time);
-                g.gain.setValueAtTime(0, audioCtx.currentTime + time);
-                g.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + time + 0.01);
-                g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + time + decay);
-                osc.connect(g); g.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + time);
-                osc.stop(audioCtx.currentTime + time + decay);
+                o.type = t; o.frequency.setValueAtTime(f, audioCtx.currentTime);
+                g.gain.setValueAtTime(v, audioCtx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + d);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(); o.stop(audioCtx.currentTime + d);
             } catch(e) {}
         }
 
         function go() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
             const btn = document.getElementById('mainBtn');
             const d = document.getElementById('display');
             const sBtn = document.getElementById('shareBtn');
+            
             btn.style.pointerEvents = 'none';
             sBtn.style.display = 'none';
-            d.innerText = "";
-            d.classList.add('shuffling');
-            d.setAttribute('aria-hidden', 'true');
-            
-            [1046, 1318, 1568, 2093].forEach((f, i) => playSound(f, i * 0.08, 0.1));
-            
-            const hour = new Date().getHours();
-            let timePool = [];
-            if (hour >= 5 && hour < 12) timePool = morningQuotes;
-            else if (hour >= 12 && hour < 14) timePool = lunchQuotes;
-            else if (hour >= 14 && hour < 18) timePool = afternoonQuotes;
-            else if (hour >= 18 && hour < 22) timePool = eveningQuotes;
-            else timePool = nightQuotes;
+            btn.classList.add('open-anim');
+            play(150, 0.1, 0.4, 'square');
 
-            let pool = [...wisdomQuotes, ...timePool, ...timePool, ...timePool]; 
+            const hour = new Date().getHours();
+            let pool = [];
+            if (hour >= 5 && hour < 12) pool = morning;
+            else if (hour >= 12 && hour < 14) pool = lunch;
+            else if (hour >= 14 && hour < 18) pool = afternoon;
+            else if (hour >= 18 && hour < 22) pool = evening;
+            else pool = night;
             
+            let combinedPool = [...pool, ...base];
             let count = 0;
-            const s = setInterval(() => {
-                d.innerText = pool[Math.floor(Math.random() * pool.length)];
+            const spin = setInterval(() => {
+                d.innerText = combinedPool[Math.floor(Math.random() * combinedPool.length)];
+                play(800 + Math.random()*500, 0.05, 0.05);
                 count++;
-                if (count > 20) {
-                    clearInterval(s);
-                    d.innerText = "";
-                    setTimeout(() => {
-                        d.classList.remove('shuffling');
-                        d.removeAttribute('aria-hidden');
-                        let choice;
-                        if (Math.random() < 0.12) {
-                            choice = challenges[Math.floor(Math.random() * challenges.length)];
-                        } else {
-                            let available = pool.filter(q => !history.includes(q));
-                            if (available.length === 0) { history = []; available = pool; }
-                            choice = available[Math.floor(Math.random() * available.length)];
-                        }
-                        history.push(choice);
-                        lastResult = choice;
-                        d.innerText = choice;
-                        d.focus();
-                        
-                        if (choice.includes("ПРЕДИЗВИКАТЕЛСТВО")) {
-                            playSound(150, 0, 0.4, 'square', 0.1); 
-                        } else {
-                            [1318, 1568, 2093, 2637].forEach((f, i) => playSound(f, i * 0.1, 0.1));
-                        }
-                        
-                        sBtn.style.display = 'block';
-                        btn.style.pointerEvents = 'auto';
-                    }, 50);
+                if (count > 25) {
+                    clearInterval(spin);
+                    btn.classList.remove('open-anim');
+                    let filtered = combinedPool.filter(x => !history.includes(x));
+                    if (filtered.length === 0) { history = []; filtered = combinedPool; }
+                    const res = filtered[Math.floor(Math.random() * filtered.length)];
+                    history.push(res);
+                    d.innerText = res;
+                    d.focus();
+                    play(1200, 0.3, 0.1);
+                    btn.style.pointerEvents = 'auto';
+                    sBtn.style.display = 'inline-block';
                 }
-            }, 60);
+            }, 80);
         }
 
-        function shareResult() {
-            const link = window.location.origin + window.location.pathname;
-            const textToShare = "🔮 Виж какво ми се падна: " + lastResult + "\n\n👉 Пробвай и ти тук:\nCrystal Oracle - Твоят Късмет\n" + link;
+        function share() {
+            const sBtn = document.getElementById('shareBtn');
+            const originalText = sBtn.innerText;
+            const txt = "🥤 Късметът ми от Queens: " + document.getElementById('display').innerText + "\n\n👉 Пробвай тук: " + window.location.href;
             const el = document.createElement('textarea');
-            el.value = textToShare;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
+            el.value = txt; document.body.appendChild(el);
+            el.select(); document.execCommand('copy');
             document.body.removeChild(el);
-            const d = document.getElementById('display');
-            const oldText = d.innerText;
-            d.innerText = "✅ Копирано! Отварям Facebook...";
+            sBtn.innerText = "✅ КОПИРАНО!";
             setTimeout(() => {
-                if(d.innerText.includes("Копирано")) d.innerText = oldText;
+                sBtn.innerText = originalText;
                 window.open("https://www.facebook.com/", "_blank");
-            }, 1200);
+            }, 800);
         }
     </script>
 </body>
